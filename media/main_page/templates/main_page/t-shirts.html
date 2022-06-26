@@ -1,0 +1,100 @@
+{% extends 'main_page/base.html' %}
+{% block title %}T-Shirts{% endblock title %}
+{% block css %}
+.real_price{
+color: grey;
+}
+.discount{
+color: greenyellow;
+}
+.product_size{
+font-size: 16px;
+color: rgb(153, 135, 221);
+}
+.card-title {
+  font-size: 14px;
+}
+.less_margin{
+  margin: 0.25rem;
+}
+p{
+  margin-bottom: 0;
+}
+.card-body a:hover{
+  color: grey;
+}
+.it-count{
+margin-left: 2.8rem;
+}
+.img-box{
+  height: 150px;
+  width: 150px;
+}
+.pr-box{
+  margin-top: 2vh;
+  background-color: white;
+  border: none;
+  border-radius: 8px;
+}
+.card{
+  width: 150px;
+  display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+  border: 0px;
+  margin-left: 5px;
+}
+.less_margin{
+  margin: 0.25rem;
+
+.h5, h5 {
+  padding: 12px;
+  font-size: 1.25rem;
+}
+h6{
+  font-size: .75rem; 
+}
+.card-body {
+  width: 167px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0;
+}
+{% endblock css %}
+{% block cart_btn %}
+<button type="button" id="popcart" class="btn btn-secondary mx-2" data-container="body" data-toggle="popover"
+  data-placement="right" data-html="true" data-content="Nothing....." onclick="updatePopover(cart)">
+  <svg class="V3C5bO" width="14" height="14" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path class="_1bS9ic" d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86" fill="#fff"></path></svg> Cart (<span id="cart">0</span>) </button>
+  {% endblock cart_btn %}
+{% block main %}
+<div class="container">
+    <div class="pr-box">
+        {% for tshirt in Tshirts %}
+        <h5 class="py-4 px-4">Flash Sale On {{tshirt.0.category}}</h5>
+        <div class="card">
+            {%for i in tshirt%}
+            <a href="/tshirtVeiw/tshirt-pr{{i.product_id}}"><div class="img-box">
+                <img src="/media/{{i.image}}" class="img-box" alt="">
+            </div>
+            <div class="card-body">
+                <h6 class="card-title" id="t-shirt_namepr{{i.product_id}}">{{i.product_name}}</h6>
+                <div class="card-text">
+                    <p class="desc">{{i.desc|slice:"0:8"}}....</p>
+                    <span class="real_price">MRP- Rs{{i.real_price}}</span><br class="less_margin">
+                    <span class="offer_price">Offer Price- Rs.<span id="t-shirt_pricepr{{i.product_id}}">{{i.price}}</span></span>
+                    <br class="less_margin">
+                    <span class="discount">Flat {{i.discount}}% Discount</span>
+                </div></a>
+                <span id="t-shirt_divpr{{i.product_id}}" class="divpr">
+                  <button id="t-shirt_pr{{i.product_id}}" class="btn btn-pr imary theme cart btn_bg">Add To Cart</button>
+                </span>
+            </div>
+        </div>
+        <div class="card">
+        {% endfor %}
+        </div>
+    </div>
+    <div class="pr-box">{% endfor %}</div>
+</div>
+{% endblock main %}

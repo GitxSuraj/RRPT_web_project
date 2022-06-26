@@ -1,0 +1,130 @@
+{% extends 'main_page/base.html' %}
+{% block title %}Checkout{% endblock title %}
+{% block css %}
+.breadcrumb-item.active{
+    color: white;
+}
+.breadcrumb{
+    background-color: grey;
+    padding: 15px;
+    border: 0.5px solid white;
+    border-radius: 12px;
+}
+#totalPrice{
+    color: #8cc223;
+}
+{% endblock css %}
+{% block cart_btn %}
+<button type="button" id="popcart" class="btn btn-secondary mx-2" data-container="body" data-toggle="popover"
+  data-placement="right" data-html="true" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+  <svg class="V3C5bO" width="14" height="14" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path class="_1bS9ic" d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86" fill="#fff"></path></svg> Cart (<span id="cart">0</span>) </button>
+{% endblock cart_btn %}
+{% block main %}
+<div class="container">
+    <div class="col my-4">
+        <h2>Step 1 - RRPT Express Checkout - Review Your Cart Items</h2>
+        <div class="my-4">
+            <ul class="list-group" id="items">
+            </ul>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb  my-2">
+                    <li class="breadcrumb-item active" aria-current="page">Your Cart Total Is <b>Rs.<span
+                                id="totalPrice"></b> </span>Enter your details below & place your order. Thanks for using RRPT!</li>
+                </ol>
+            </nav>
+
+        </div>
+    </div>
+    <div class="col my-4">
+        <h2>Step 2 - Enter Address & Other Details:</h2>
+        <form method="post" action="/checkout/">{% csrf_token %}
+            <input type="hidden" name="itemsJson" id="itemsJson" required>
+            <input type="hidden" name="amount" id="amount" required>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputname">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input type="text" class="form-control" id="address1" name="address1" placeholder="1234 Main St"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress2">Address line 2</label>
+                <input type="text" class="form-control" id="address2" name="address2"
+                    placeholder="Apartment, studio, or floor">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" name="city" id="city" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">State</label>
+                    <input type="text" class="form-control" id="state" name="state" placeholder="Enter State" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Zip</label>
+                    <input type="text" class="form-control" id="zip" name="zip_code" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputZip">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required>
+            </div>
+            {% if user.is_authenticated %}
+            <button type="submit" class="btn theme order-btn btn_bg btn-primary my-2">Place Order</button>
+            {% else %}
+            <button type="button" class="btn theme order-btn btn_bg btn-primary my-2" data-toggle="modal" data-target="#loginModal">Place Order</button>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock main %}
+{% block js %}
+<script>
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    } else {
+        cart = JSON.parse(localStorage.getItem('cart'));
+    }
+    var sum = 0;
+    var totalPrice = 0;
+    if ($.isEmptyObject(cart)) {
+        //if object is empty
+        mystr = `<p>Your cart is empty, please add some items to your cart before checking out!</p>`
+        $('#items').append(mystr);
+    } else {
+        for (item in cart) {
+            let name = cart[item][1];
+            let qty = cart[item][0];
+            let itemPrice = cart[item][2];
+            sum = sum + qty;
+            totalPrice = totalPrice + qty * itemPrice
+            mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">${name}
+                    <span class="badge badge-primary theme badge-pill d-flex align-items-center">Quantity:- ${qty}</span></li>`
+
+            $('#items').append(mystr);
+        }
+
+
+    }
+    document.getElementById('cart').innerHTML = sum;
+    document.getElementById('totalPrice').innerHTML = totalPrice;
+    $('#itemsJson').val(JSON.stringify(cart));
+    {% if thank %}
+    alert("Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker")
+    localStorage.clear();
+    document.location = "/tracker";
+    var totalPrice = 0;
+    {% endif %}
+    $('#amount').val($('#totalPrice').html())
+</script>
+{% endblock js %}
