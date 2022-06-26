@@ -1,0 +1,206 @@
+{% extends 'main_page/base.html' %}
+{% block title %}{{tshirt.product_name}}{% endblock title %}
+{% block css %}
+.btn-box{
+  background-color: white;
+  border: none;
+  border-radius: 11px;
+  display: inline-flex;
+}
+.image-box{
+    border: 2px solid grey;
+    border-radius: 20px;
+    padding: 10px 0px;
+    background-color: white;
+}
+.product-btn{
+  width: 9rem;
+  height: 45px;
+}
+.real-price{
+    color: grey;
+    margin-right: 20px;
+}
+.col-md-4{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 10px;
+    bottom: 0;
+    z-index: 72;
+    -webkit-align-self: flex-start;
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+}
+.it-count {
+  margin-left: 2.8rem!important;
+}
+img{
+    border-radius: 25px;
+}
+.product_size{
+  font-size: 16px;
+  color: rgb(153, 135, 221);
+  }
+.less_margin{
+margin: 0.5rem;
+}
+.it-count{
+margin-left: 3.8rem;
+}
+.divpr{
+  width: 25%;
+}
+{% endblock css %}
+{% block cart_btn %}
+<button type="button" id="popcart" class="btn btn-secondary mx-2" data-container="body" data-toggle="popover"
+  data-placement="right" data-html="true" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+  <svg class="V3C5bO" width="14" height="14" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path class="_1bS9ic" d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86" fill="#fff"></path></svg> Cart (<span id="cart">0</span>) </button>{% endblock cart_btn %}
+{% block main %}
+
+<div class="container my-4">
+    <div class="row">
+    <div class="col-md-4">
+    <div class="row image-box">
+        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="10000">
+                <img src="/media/{{tshirt.image}}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <img src="/media/{{tshirt.image2}}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="/media/{{tshirt.image3}}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="/media/{{tshirt.image4}}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>Third slide label</h5>
+                  <p>Some representative placeholder content for the third slide.</p>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+    </div>
+    <!-- <div class="btn-box my-2">
+      <button class="btn btn_bg theme product-btn mx-4 my-2"> Buy Now</button>
+      <span id="t-shirt_divpr{{tshirt.product_id}}" class="divpr">
+        <button id="t-shirt_pr{{tshirt.product_id}}" class="btn product-btn theme cart mx-4 my-2 btn_bg">Add To Cart</button>
+      </span>
+  </div> -->
+</div>
+<div class="col-md-8">
+  <h3 id="t-shirt_namepr{{i.product_id}}">{{tshirt.product_name}}</h3>
+    <span class="real-price">Mrp. Rs.{{tshirt.real_price}}</span>
+    <span class="offer_price">Offer Price- Rs.<span id="t-shirt_pricepr{{i.product_id}}">{{tshirt.price}}</span></span>
+    <span><select class="form-select" aria-label="Default select example" style="width: 70px;
+      display: inline;
+      margin: 0 0 0 40px;"> <b>Size</b>
+      <option selected value="36">36</option>
+      <option value="38">38</option>
+      <option value="40">40</option>
+      <option value="42">42</option>
+    </select></span>
+    <div class="lorem">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam veniam iusto quae, eum explicabo illum, distinctio maiores doloribus dolores natus, tempora quas ipsam vitae vero dolore cum? Reiciendis sit neque ab eum dolorem recusandae commodi similique quam est assumenda consequatur, nisi eius quibusdam tempore earum voluptate error amet! Quae illo neque quos! Magnam, fugiat tempora eaque dicta dolor id, rerum sequi in eius sint neque eligendi totam, doloribus minus repellendus? Corrupti nesciunt nam perspiciatis repellendus, similique, harum excepturi quia, velit obcaecati totam dolores voluptatem dolorem repudiandae error quam laborum quaerat consequatur? Natus libero quibusdam deleniti velit modi, alias esse maiores eveniet, molestias, ea sunt sapiente sint voluptatibus? Nostrum maxime itaque fugit dicta impedit voluptatum assumenda incidunt qui perspiciatis molestiae laboriosam ullam architecto et minus voluptatibus laborum inventore dolorem eius eaque labore velit eos, nulla fugiat? Numquam voluptatibus dicta vel culpa excepturi totam optio reiciendis explicabo doloremque distinctio! Ratione a ullam distinctio deserunt, nihil sed, amet commodi officia optio facilis nulla ab est non aliquid eius quis sapiente? Velit, reiciendis. Eius, ad architecto voluptatem ratione quia reprehenderit veniam accusantium consectetur officia temporibus tempora omnis dolor voluptatum voluptates corrupti beatae fugit. Suscipit qui deleniti explicabo aliquid! Deserunt adipisci reprehenderit quod sint accusamus similique, placeat, dolorum ut architecto fugit porro in repellendus suscipit voluptas a totam. Molestias eligendi porro velit, quis maxime labore exercitationem, fuga mollitia ad sint illum fugit nisi vitae eum a? Vitae similique rerum modi omnis? Quam, corporis! Deleniti libero ipsa, qui consequuntur aut nihil expedita non nemo voluptate in, sint deserunt facilis maiores quas laudantium, consectetur vero corporis eaque. Culpa optio ex exercitationem sequi nisi laborum voluptatem doloribus iusto, unde magnam quaerat veritatis id rem fuga magni quo veniam ad totam, illum nesciunt aliquam repellendus? Iusto dicta consequuntur aliquam debitis molestias provident. Ipsa quia quas saepe in ut ab iusto quos. Distinctio modi repellat alias ullam illum laudantium enim, sit ratione maxime debitis expedita, dignissimos fugiat. Enim, est expedita. Quas fuga, id reprehenderit, expedita laboriosam voluptatibus deserunt suscipit necessitatibus, autem minima temporibus! Hic commodi natus velit temporibus nam molestias voluptates ipsum iste ab nulla. Voluptates, voluptatem odit. Eius, ab vero reprehenderit exercitationem nihil illum provident suscipit quas! Unde impedit possimus quaerat error amet a iste labore maxime deserunt natus reprehenderit, deleniti doloribus. Eius mollitia nulla repudiandae obcaecati expedita quas debitis, dolorum quasi dolore provident, blanditiis accusamus tempore perferendis delectus enim et. Voluptate id dolore quia error deserunt placeat aspernatur earum sit cupiditate, provident quidem reiciendis necessitatibus laborum sint velit suscipit nostrum corporis repellendus voluptatum eum distinctio adipisci illo. Aspernatur non odit excepturi recusandae vel, consequatur, eligendi amet veniam adipisci ullam ex doloribus debitis deleniti nulla temporibus explicabo consectetur laborum minima quisquam delectus voluptatum sunt suscipit. Nostrum et dolor nobis labore fugit! Voluptate adipisci perspiciatis, sapiente, aliquid omnis minima dolorum laudantium magni tempore et architecto, soluta facilis voluptas placeat maiores aperiam eius eveniet delectus suscipit libero quae saepe. Autem tempora pariatur recusandae. Ex asperiores iusto quaerat, vitae, sed inventore omnis ea, explicabo reiciendis officiis veniam quisquam. Pariatur eveniet, voluptatum animi officiis alias neque deserunt, sequi quos soluta veritatis cumque accusantium dolorem nihil id magnam at ipsam esse, illo odio voluptates quasi corrupti? Officiis eaque velit autem dolorum rerum expedita unde ratione tenetur laudantium hic est vero eos reiciendis recusandae esse dolorem libero dolore rem minima sequi ab sapiente voluptas, omnis 
+    </div>
+</div>
+<hr class="less_margin">
+<div class="row-md-8 about-prod">
+</div>
+
+</div>
+{% endblock main %}
+{% block js %}  
+<script>
+  // Find out the cart items from localStorage
+  if (localStorage.getItem('cart') == null) {
+    var cart = {};
+  } else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    updateCart(cart);
+  }
+  // If the add to cart button is clicked, add/increment the item
+  //$('.cart').click(function() {
+  $('.divpr').on('click', 'button.cart', function () {
+    var idstr = this.id.toString();
+    if (cart[idstr] != undefined) {
+      qty = cart[idstr][0];
+
+    } else {
+      qty = 1;
+      name = document.getElementById('name' + idstr).innerHTML;
+      price = document.getElementById('price' + idstr).innerHTML
+      cart[idstr] = [qty, name, parseInt(price)];
+
+    }
+    updateCart(cart);
+  });
+  //Add Popover to cart
+  $('#popcart').popover();
+
+  function updatePopover(cart) {
+    var popStr = "";
+    popStr = popStr + "<h5>Items Your Cart</h5><div class='mx-2 my-2'>";
+    var i = 1;
+    for (var item in cart) {
+      popStr = popStr + "<b>" + i + "</b>. ";
+      popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 25) + "... Qty: " + cart[item][0] + '<br>';
+      i = i + 1;
+    }
+    popStr = popStr + "</div> <a href='/checkout'><button class='btn theme btn_bg btn-not-flex btn-primary' id ='checkout'>Checkout</button></a> <button class='btn theme btn_bg btn-not-flex btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>"
+    document.getElementById('popcart').setAttribute('data-content', popStr);
+    $('#popcart').popover('show');
+  }
+
+  function clearCart() {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    for (var item in cart) {
+      document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-primary theme cart btn_bg add_to_cart">Add To Cart</button>'
+    }
+    localStorage.clear();
+    cart = {};
+    updateCart(cart);
+  }
+
+  function updateCart(cart) {
+    var sum = 0;
+    for (var item in cart) {
+      sum = sum + cart[item][0];
+      document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary theme btn_bg minus'>-</button> <span class='it-count' id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn theme btn_bg btn-primary plus'> + </button>";
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cart').innerHTML = sum;
+
+  }
+  // If plus or minus button is clicked, change the cart as well as the display value
+  $('.divpr').on("click", "button.minus", function () {
+    a = this.id.slice(7,);
+    cart['pr' + a][0] = cart['pr' + a][0] - 1;
+    cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+    document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    updateCart(cart);
+  });
+  $('.divpr').on("click", "button.plus", function () {
+    a = this.id.slice(6,);
+    cart['pr' + a][0] = cart['pr' + a][0] + 1;
+    document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    updateCart(cart);
+  });
+</script> 
+  {% endblock js %}
+

@@ -1,0 +1,76 @@
+{% extends 'main_page/base.html' %}
+
+{% block title %}Contact Us{% endblock title %}
+{% block css %}
+.form-select{
+  width:50vw;
+  margin-bottom:1vh;
+}
+.contact-for-fill-area{
+  width: 75vw;
+  margin-left: 12vw;
+}
+
+.form-select{
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+.submit-btn{
+  margin-left: 70vw;
+}
+.row{
+  --bs-gutter-x: 0rem;
+}
+.form-control{
+  background-color: #fee5e5;
+}
+.form-select{
+  background-color: #fee5e5;
+}
+
+{% endblock css %}
+{% block main %}
+  <div class="contact-box">
+    <form action="/contact/" method="post">{% csrf_token %}
+      <h1 class="mx-5">Contact Us</h1>
+      <div class="row contact-for-fill-area">
+        <div class="col">
+          <label for="name" class="form-label">Your Name</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Your name" aria-label="First name"
+            required>
+        </div>
+      </div>
+      <div class="mb-3 contact-for-fill-area">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="exampleFormControlInput1" name="email"
+          placeholder="name@example.com" required>
+      </div>
+      <div class="mb-3 contact-for-fill-area">
+        <label for="comments" class="form-label">Your<select class="form-select" aria-label="Default select example"
+            name="desc_type" required>
+            <span class="form-label">Select your Iput Type</span>
+            <option selected>Suggestion</option>
+            <option>Comments</option>
+            <option>Query</option>
+            <option>Others</option>
+          </select></label>
+        <textarea class="form-control" id="comment" name="desc" rows="3"></textarea required>
+      </div>
+      {% if user.is_authenticated %}
+      <button type="submit" id="submit" onclick="submit()" class="btn_bg theme submit-btn my-2">Submit</button>
+      {% else %}
+      <button type="button" class="btn theme btn_bg my-2" data-toggle="modal" data-target="#loginModal">Submit</button>
+      {% endif %}
+    </form>
+  </div>
+  <script>
+      function submit() {
+      txt = "Submitted";
+      alert("Your response have been submitted")
+    } else {
+      txt = "Submit"
+    }
+    document.getElementById("submit").innerHTML = txt;
+  }
+  </script>
+{% endblock main %}
