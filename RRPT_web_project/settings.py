@@ -73,11 +73,21 @@ WSGI_APPLICATION = 'RRPT_web_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+DATABASES ={
+        'default' : {
+            'ENGINE' : 'django.db.backends.postgresql_psycopg2',
+            'NAME' : 'database',
+            'USER' : 'postgres',
+            'PASSWORD' : '12345678',
+            'HOST' : 'localhost',
+            'PORT' : '5432',
+        }
 }
 
 # Password validationg
@@ -125,5 +135,5 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_ROOT = BASE_DIR / 'static'
-MEDIA_URL = "/media/"
+MEDIA_URL = "media/"
 
